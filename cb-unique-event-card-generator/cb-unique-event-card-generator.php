@@ -11,23 +11,50 @@ function cb_register_event_post_type() {
     $args = array(
         'public' => true,
         'label'  => 'Event Cards',
-        'supports' => array('title', 'editor'),
+        'supports' => array('title', 'editor', 'thumbnail'),
         'menu_icon' => 'dashicons-calendar-alt',
     );
     register_post_type('cb_event_card', $args);
 }
 add_action('init', 'cb_register_event_post_type');
 
-// Adding admin menu page
-function cb_add_admin_page() {
-    add_submenu_page('edit.php?post_type=cb_event_card', 'Event Card Manager', 'Manage Event Cards', 'manage_options', 'cb_event_manager', 'cb_event_manager_callback');
+// Adding custom meta boxes for event details
+function cb_add_event_meta_boxes() {
+    add_meta_box('cb_event_details', 'Event Details', 'cb_event_details_callback', 'cb_event_card', 'normal', 'high');
 }
-add_action('admin_menu', 'cb_add_admin_page');
+add_action('add_meta_boxes', 'cb_add_event_meta_boxes');
 
-// Admin page callback
-function cb_event_manager_callback() {
-    include plugin_dir_path(__FILE__) . '/admin/admin-page.php';
+function cb_event_details_callback($post) {
+    // Nonce for security
+    wp_nonce_field(basename(__FILE__), 'cb_event_nonce');
+    
+    // Get current post meta data
+    $cb_event_date = get_post_meta($post->ID, '_cb_event_date', true);
+    $cb_event_time = get_post_meta($post->ID, '_cb_event_time', true);
+    
+    // Display the fields
+    echo '<p>Date: <input type="date" name="cb_event_date" value="' . esc_attr($cb_event_date) . '"></p>';
+    echo '<p>Time: <input type="time" name="cb_event_time" value="' . esc_attr($cb_event_time) . '"></p>';
 }
+
+// Save the custom fields data
+function cb_save_event_meta($post_id) {
+    // Check nonce for security
+    if (!isset($_POST['cb_event_nonce']) || !wp_verify_nonce($_POST['cb_event_nonce'], basename(__FILE__))) {
+        return $post_id;
+    }
+
+    // Save each custom field value
+    update_post_meta($post_id, '_cb_event_date', sanitize_text_field($_POST['cb_event_date']));
+    update_post_meta($post_id, '_cb_event_time', sanitize_text_field($_POST['cb_event_time']));
+}
+add_action('save_post', 'cb_save_event_meta');
+
+// Enqueue custom styles
+function cb_enqueue_event_styles() {
+    wp_enqueue_style('cb-event-style', plugin_dir_url(__FILE__) . 'cb-event-style.css');
+}
+add_action('wp_enqueue_scripts', 'cb_enqueue_event_styles');
 
 // Shortcode to display events on any page
 function cb_display_event_cards() {
@@ -56,4 +83,3 @@ function cb_integrate_event_cards_with_vc() {
         )
     ));
 }
-

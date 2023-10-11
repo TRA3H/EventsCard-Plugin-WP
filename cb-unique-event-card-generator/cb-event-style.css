@@ -1,0 +1,24 @@
+.cb-event-card {
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.cb-event-card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.cb-event-card p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.cb-event-card .cb-event-image img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
