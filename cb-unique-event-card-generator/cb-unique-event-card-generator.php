@@ -59,7 +59,39 @@ add_action('wp_enqueue_scripts', 'cb_enqueue_event_styles');
 // Shortcode to display events on any page
 function cb_display_event_cards() {
     ob_start();
-    include plugin_dir_path(__FILE__) . '/public/display-events.php';
+    
+    // Query for the custom post type events
+    $events = new WP_Query(array(
+        'post_type' => 'cb_event_card',
+        'posts_per_page' => -1,
+        'meta_key' => '_cb_event_date',
+        'orderby' => 'meta_value',
+        'order' => 'ASC'
+    ));
+
+    if ($events->have_posts()) {
+        while ($events->have_posts()) {
+            $events->the_post();
+            $event_date = get_post_meta(get_the_ID(), '_cb_event_date', true);
+            $event_time = get_post_meta(get_the_ID(), '_cb_event_time', true);
+            ?>
+            <div class="cb-event-card">
+                <h2><?php the_title(); ?></h2>
+                <p><?php echo $event_date . ' ' . $event_time; ?></p>
+                <?php if (has_post_thumbnail()) : ?>
+                    <div class="cb-event-image">
+                        <?php the_post_thumbnail('full'); ?>
+                    </div>
+                <?php endif; ?>
+                <div><?php the_content(); ?></div>
+            </div>
+            <?php
+        }
+    } else {
+        echo "No events found.";
+    }
+    wp_reset_postdata();
+    
     return ob_get_clean();
 }
 add_shortcode('cb_event_cards', 'cb_display_event_cards');
@@ -69,7 +101,6 @@ add_shortcode('cb_event_cards', 'cb_display_event_cards');
 if (defined('WPB_VC_VERSION')) {
     add_action('vc_before_init', 'cb_integrate_event_cards_with_vc', 30);
 }
-add_action('vc_before_init', 'cb_integrate_event_cards_with_vc', 30);
 
 function cb_integrate_event_cards_with_vc() {
     vc_map(array(
@@ -83,3 +114,27 @@ function cb_integrate_event_cards_with_vc() {
         )
     ));
 }
+
+// Automatically delete past events
+function cb_delete_past_events() {
+    $current_date = date('Y-m-d');
+    $events = new WP_Query(array(
+        'post_type' => 'cb_event_card',
+        'posts_per_page' => -1,
+        'meta_key' => '_cb_event_date',
+        'meta_value' => $current_date,
+        'meta_compare' => '<',
+        'orderby' => 'meta_value',
+        'order' => 'ASC'
+    ));
+
+    if ($events->have_posts()) {
+        while ($events->have_posts()) {
+            $events->the_post();
+            wp_delete_post(get_the_ID(), true);
+        }
+    }
+    wp_reset_postdata();
+}
+add_action('wp_loaded', 'cb_delete_past_events');
+?>

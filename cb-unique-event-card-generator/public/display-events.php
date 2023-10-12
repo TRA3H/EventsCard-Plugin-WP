@@ -1,8 +1,23 @@
 <?php
-// Query for the custom post type events
+// Query for the custom post type events with ordering
 $events = new WP_Query(array(
     'post_type' => 'cb_event_card',
-    'posts_per_page' => -1
+    'posts_per_page' => -1,
+    'meta_query' => array(
+        'relation' => 'AND',
+        'event_date_clause' => array(
+            'key' => '_cb_event_date',
+            'compare' => 'EXISTS',
+        ),
+        'event_time_clause' => array(
+            'key' => '_cb_event_time',
+            'compare' => 'EXISTS',
+        ),
+    ),
+    'orderby' => array(
+        'event_date_clause' => 'DESC',
+        'event_time_clause' => 'DESC',
+    ),
 ));
 
 if ($events->have_posts()) {
@@ -27,3 +42,4 @@ if ($events->have_posts()) {
     echo "No events found.";
 }
 wp_reset_postdata();
+?>
