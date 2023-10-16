@@ -1,10 +1,12 @@
 .cb-event-card {
-    background: #f4f4f4;
     padding: 20px;
-    border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background: linear-gradient(to bottom, #f4f4f4, #e0e0e0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     margin-bottom: 20px;
+    width: 70%; 
+    margin: 20px auto;
 }
 
 .cb-event-card h2 {
