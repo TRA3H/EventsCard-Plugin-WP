@@ -20,7 +20,9 @@
 }
 
 .cb-event-card .cb-event-image img {
-    max-width: 100%;
+    width: 80% !important;
+    max-width: none !important;
     height: auto;
-    margin-bottom: 15px;
+    margin: 0 auto; 
+    display: block; 
 }
