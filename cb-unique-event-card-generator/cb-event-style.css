@@ -20,9 +20,41 @@
 }
 
 .cb-event-card .cb-event-image img {
-    width: 80% !important;
-    max-width: none !important;
+    width: 100%;
+    max-width: none;
     height: auto;
     margin: 0 auto; 
     display: block; 
+}
+
+.wp-block-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    max-width: none !important;
+}
+
+
+/* If you want to add some space around the image */
+.wp-block-image {
+    margin: 10px 0; /* Adjust this to your preference */
+}
+
+/* Additional styles for smaller screens (e.g., mobile) */
+@media (max-width: 768px) {
+    .cb-event-card {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    .cb-event-card h2 {
+        font-size: 20px; /* Adjust font size for smaller screens */
+        margin-bottom: 8px;
+    }
+
+    .cb-event-card p {
+        font-size: 16px; /* Adjust font size for smaller screens */
+        margin-bottom: 12px;
+    }
 }

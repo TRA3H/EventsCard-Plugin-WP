@@ -137,4 +137,11 @@ function cb_delete_past_events() {
     wp_reset_postdata();
 }
 add_action('wp_loaded', 'cb_delete_past_events');
+
+add_filter('the_content', 'remove_image_links');
+function remove_image_links($content) {
+    $content = preg_replace('/<a(.*?)><img(.*?)><\/a>/i', '<img$2>', $content);
+    return $content;
+}
+
 ?>
