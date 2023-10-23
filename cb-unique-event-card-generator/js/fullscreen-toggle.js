@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const eventCards = document.querySelectorAll('.cb-event-card');
-    eventCards.forEach(card => {
-        card.addEventListener('click', function() {
-            this.classList.toggle('fullscreen');
+    const imageLinks = document.querySelectorAll('.cb-event-image a');
+    imageLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
         });
     });
 });

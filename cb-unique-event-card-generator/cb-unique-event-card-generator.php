@@ -82,9 +82,9 @@ function cb_display_event_cards() {
                 <p><?php echo $event_date . ' ' . $event_time; ?></p>
                 <?php if (has_post_thumbnail()) : ?>
                     <div class="cb-event-image">
-                        <a href="<?php echo get_the_post_thumbnail_url(); ?>" data-lightbox="event-image">
-                            <?php the_post_thumbnail('full'); ?>
-                        </a>
+                    <a href="<?php echo get_the_post_thumbnail_url(); ?>" data-lightbox="event-image">
+                         <?php the_post_thumbnail('full'); ?>
+                    </a>
                     </div>
                 <?php endif; ?>
                 <div><?php the_content(); ?></div>
@@ -142,11 +142,11 @@ function cb_delete_past_events() {
 }
 add_action('wp_loaded', 'cb_delete_past_events');
 
-// add_filter('the_content', 'remove_image_links');
-// function remove_image_links($content) {
-//     $content = preg_replace('/<a(.*?)><img(.*?)><\/a>/i', '<img$2>', $content);
-//     return $content;
-// }
+add_filter('the_content', 'remove_image_links');
+function remove_image_links($content) {
+    $content = preg_replace('/<a(.*?)><img(.*?)><\/a>/i', '<img$2>', $content);
+    return $content;
+}
 
 function enqueue_event_card_scripts() {
     // Register and enqueue the JavaScript file

@@ -36,7 +36,6 @@
     max-width: none !important;
 }
 
-
 /* If you want to add some space around the image */
 .wp-block-image {
     margin: 10px 0; /* Adjust this to your preference */
@@ -45,20 +44,20 @@
 /* Additional styles for smaller screens (e.g., mobile) */
 @media (max-width: 768px) {
     .cb-event-card {
-        width: 100%;      /* Make the card take the full width of the screen */
-        padding: 5%;      /* Add some padding for aesthetics */
-        margin: 5% 0;     /* Add some margin to separate cards */
+        width: 100% !important;      
+        padding: 5% !important;      
+        margin: 5% 0 !important;     
     }
     .cb-event-card h2 {
-        font-size: 24px;  /* Increase font size for the title */
-        margin-bottom: 8px;
+        font-size: 24px !important;  
+        margin-bottom: 8px !important;
     }
     .cb-event-card p {
-        font-size: 20px;  /* Increase font size for the description */
-        margin-bottom: 12px;
+        font-size: 20px !important;  
+        margin-bottom: 12px !important;
     }
     .cb-event-card .cb-event-image img {
-        width: 100%;      /* Make the image take the full width of the card */
-        height: auto;
+        width: 100% !important;      
+        height: auto !important;
     }
 }
