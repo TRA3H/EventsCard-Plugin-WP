@@ -45,16 +45,20 @@
 /* Additional styles for smaller screens (e.g., mobile) */
 @media (max-width: 768px) {
     .cb-event-card {
-        padding: 10px; /* Adjust padding for smaller screens */
+        width: 100%;      /* Make the card take the full width of the screen */
+        padding: 5%;      /* Add some padding for aesthetics */
+        margin: 5% 0;     /* Add some margin to separate cards */
     }
-
     .cb-event-card h2 {
-        font-size: 20px; /* Adjust font size for smaller screens */
+        font-size: 24px;  /* Increase font size for the title */
         margin-bottom: 8px;
     }
-
     .cb-event-card p {
-        font-size: 16px; /* Adjust font size for smaller screens */
+        font-size: 20px;  /* Increase font size for the description */
         margin-bottom: 12px;
+    }
+    .cb-event-card .cb-event-image img {
+        width: 100%;      /* Make the image take the full width of the card */
+        height: auto;
     }
 }
