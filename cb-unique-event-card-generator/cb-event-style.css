@@ -7,6 +7,7 @@
     margin-bottom: 20px;
     width: 70%; 
     margin: 20px auto;
+    overflow: hidden !important; /* This will prevent any child elements from overflowing the container */
 }
 
 .cb-event-card h2 {
@@ -20,20 +21,23 @@
 }
 
 .cb-event-card .cb-event-image img {
-    width: 100%;
-    max-width: none;
-    height: auto;
-    margin: 0 auto; 
-    display: block; 
-}
-
-.wp-block-image img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+    width: 100%; /* This ensures the image takes the full width of the container */
+    height: auto; /* This maintains the aspect ratio of the image */
+    object-fit: cover; /* This ensures the image covers the container without being stretched */
     display: block;
     margin: 0 auto;
     max-width: none !important;
+}
+
+.cb-event-card img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+}
+
+.cb-event-image img {
+    width: 300px; /* or whatever width you prefer */
+    height: auto;
 }
 
 /* If you want to add some space around the image */
