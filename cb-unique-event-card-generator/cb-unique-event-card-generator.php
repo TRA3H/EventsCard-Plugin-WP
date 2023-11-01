@@ -31,10 +31,13 @@ function cb_event_details_callback($post) {
     // Get current post meta data
     $cb_event_date = get_post_meta($post->ID, '_cb_event_date', true);
     $cb_event_time = get_post_meta($post->ID, '_cb_event_time', true);
+    $cb_event_end_time = get_post_meta($post->ID, '_cb_event_end_time', true); // End time
     
     // Display the fields
-    echo '<p>Date: <input type="date" name="cb_event_date" value="' . esc_attr($cb_event_date) . '"></p>';
-    echo '<p>Time: <input type="time" name="cb_event_time" value="' . esc_attr($cb_event_time) . '"></p>';
+    echo '<p>Start Date: <input type="date" name="cb_event_date" value="' . esc_attr($cb_event_date) . '"></p>';
+    echo '<p>Start Time: <input type="time" name="cb_event_time" value="' . esc_attr($cb_event_time) . '"></p>';
+    echo '<p>End Time: <input type="time" name="cb_event_end_time" value="' . esc_attr($cb_event_end_time) . '"></p>'; // End time field
+    
     // Get current post meta data for the image
     $cb_event_image_url = get_post_meta($post->ID, '_cb_event_image_url', true);
 
@@ -58,7 +61,6 @@ function cb_event_details_callback($post) {
             <option value="cb-event-large" ' . selected($cb_event_image_size, 'cb-event-large', false) . '>Custom Large (500x500)</option>
         </select>
     </p>';
-    
 }
 
 // Save the custom fields data
@@ -71,6 +73,7 @@ function cb_save_event_meta($post_id) {
     // Save each custom field value
     update_post_meta($post_id, '_cb_event_date', sanitize_text_field($_POST['cb_event_date']));
     update_post_meta($post_id, '_cb_event_time', sanitize_text_field($_POST['cb_event_time']));
+    update_post_meta($post_id, '_cb_event_end_time', sanitize_text_field($_POST['cb_event_end_time'])); // Save end time
     update_post_meta($post_id, '_cb_event_image_url', sanitize_text_field($_POST['cb_event_image_url']));
     update_post_meta($post_id, '_cb_event_image_size', sanitize_text_field($_POST['cb_event_image_size']));
 }
@@ -101,12 +104,14 @@ function cb_display_event_cards() {
             $events->the_post();
             $event_date = get_post_meta(get_the_ID(), '_cb_event_date', true);
             $event_time = get_post_meta(get_the_ID(), '_cb_event_time', true);
+            $event_end_time = get_post_meta(get_the_ID(), '_cb_event_end_time', true); // Fetch the end time
             $event_image_url = get_post_meta(get_the_ID(), '_cb_event_image_url', true); // Fetch the image URL
             $image_size = get_post_meta(get_the_ID(), '_cb_event_image_size', true) ?: 'thumbnail'; // Fetch the image size, default to 'thumbnail' if not set
             ?>
             <div class="cb-event-card">
                 <h2><?php the_title(); ?></h2>
-                <p><?php echo $event_date . ' ' . $event_time; ?></p>
+                <p>Start: <?php echo $event_date . ' ' . $event_time; ?></p>
+                <p>End Time: <?php echo $event_end_time; ?></p>
                 <?php if ($event_image_url): ?>
                     <a href="<?php echo esc_url($event_image_url); ?>" data-lightbox="event-image">
                         <img src="<?php echo esc_url($event_image_url); ?>" alt="Event Image" style="max-width:500px;">
@@ -128,8 +133,6 @@ function cb_display_event_cards() {
     return ob_get_clean();
 }
 add_shortcode('cb_event_cards', 'cb_display_event_cards');
-
-
 
 //WPBakery 
 // Check if WPBakery Page Builder is activated
