@@ -2,7 +2,7 @@
 /*
 Plugin Name: CB Unique Event Card Generator
 Description: Custom plugin to generate event cards.
-Version: 10.0
+Version: 1.0.5
 Author: Cyrus Baybay
 */
 
@@ -150,14 +150,15 @@ function cb_integrate_event_cards_with_vc() {
     ));
 }
 
-// Automatically delete past events
 function cb_delete_past_events() {
-    $current_date = date('Y-m-d');
+    // Get the date from one month ago
+    $one_month_ago = date('Y-m-d', strtotime('-1 month'));
+
     $events = new WP_Query(array(
         'post_type' => 'cb_event_card',
         'posts_per_page' => -1,
         'meta_key' => '_cb_event_date',
-        'meta_value' => $current_date,
+        'meta_value' => $one_month_ago,
         'meta_compare' => '<',
         'orderby' => 'meta_value',
         'order' => 'ASC'
