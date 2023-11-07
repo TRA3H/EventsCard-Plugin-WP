@@ -7,6 +7,7 @@ The CB Unique Event Card Generator is a custom WordPress plugin designed to gene
 - [Features](#features)
 - [Usage](#usage)
 - [Files Overview](#files-overview)
+- [Function Reference](#function-reference)
 - [Customization Guide](#customization-guide)
 - [Author](#author)
 
@@ -34,6 +35,23 @@ The CB Unique Event Card Generator is a custom WordPress plugin designed to gene
 - **Admin JS**: Contains JavaScript functionalities for the admin dashboard.
 - **Fullscreen Toggle JS**: Contains JavaScript for toggling fullscreen for event images.
 - **Display Events**: Contains the PHP code for querying and displaying the event cards.
+
+## Function Reference
+
+Below is a list of functions defined in the plugin and their purpose:
+
+- `cb_register_event_post_type()`: Registers the custom post type 'Event Cards' for creating event cards.
+- `cb_add_event_meta_boxes()`: Adds custom meta boxes for event details in the post editor.
+- `cb_event_details_callback()`: Callback function for displaying the event details meta box fields.
+- `cb_save_event_meta()`: Saves the custom fields data when an event card is saved or updated.
+- `cb_enqueue_event_styles()`: Enqueues custom styles and scripts for the event cards on the front end.
+- `cb_display_event_cards()`: Shortcode function for displaying the event cards on the front end.
+- `cb_integrate_event_cards_with_vc()`: Integrates the event cards with WPBakery Page Builder.
+- `cb_delete_past_events()`: Deletes event cards that are past their event date.
+- `remove_image_links()`: Filter function to remove links from images in the content.
+- `cb_custom_image_sizes()`: Adds custom image sizes for event images.
+- `enqueue_event_card_scripts()`: Enqueues scripts for the event cards on the front end.
+- `cb_enqueue_admin_scripts()`: Enqueues scripts for the admin dashboard functionalities.
 
 ## Customization Guide
 
