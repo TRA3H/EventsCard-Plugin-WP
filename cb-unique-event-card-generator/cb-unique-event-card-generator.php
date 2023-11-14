@@ -2,7 +2,7 @@
 /*
 Plugin Name: CB Unique Event Card Generator
 Description: Custom plugin to generate event cards.
-Version: 1.0.5
+Version: 1.0.6
 Author: Cyrus Baybay
 */
 
@@ -110,8 +110,8 @@ function cb_display_event_cards() {
             ?>
             <div class="cb-event-card">
                 <h2><?php the_title(); ?></h2>
-                <p>Start: <?php echo $event_date . ' ' . $event_time; ?></p>
-                <p>End Time: <?php echo $event_end_time; ?></p>
+                <p>Start: <?php echo $event_date . ' ' . date("g:i A", strtotime($event_time)); ?></p>
+                <p>End Time: <?php echo date("g:i A", strtotime($event_end_time)); ?></p>
                 <?php if ($event_image_url): ?>
                     <a href="<?php echo esc_url($event_image_url); ?>" data-lightbox="event-image">
                         <img src="<?php echo esc_url($event_image_url); ?>" alt="Event Image" style="max-width:500px;">
@@ -133,6 +133,7 @@ function cb_display_event_cards() {
     return ob_get_clean();
 }
 add_shortcode('cb_event_cards', 'cb_display_event_cards');
+
 
 //WPBakery 
 // Check if WPBakery Page Builder is activated
